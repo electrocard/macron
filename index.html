@@ -12,6 +12,7 @@
     justify-content: center;
     align-items: center;
     background-color: #000;
+    flex-direction: column;
   }
   video {
     max-width: 80%;
@@ -28,22 +29,60 @@
   video::-ms-media-controls {
     display: none !important;
   }
+  #unmuteBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: none;
+  }
 </style>
 </head>
 <body>
-<video id="video" autoplay muted playsinline>
-  <source src="video.mp4" type="video/mp4" />
+
+<video id="video" autoplay playsinline>
+  <source id="videoSource" src="" type="video/mp4" />
+  Votre navigateur ne supporte pas la vidéo HTML5.
 </video>
+
 <button id="unmuteBtn">Activer le son</button>
 
 <script>
-  const video = document.getElementById('video');
-  const btn = document.getElementById('unmuteBtn');
+  const today = new Date();
+  const isFriday = today.getDay() === 5;
 
-  btn.onclick = () => {
+  const video = document.getElementById('video');
+  const videoSource = document.getElementById('videoSource');
+  const unmuteBtn = document.getElementById('unmuteBtn');
+
+  if (isFriday) {
+    videoSource.src = "vrai_vendredi.mp4";  // Remplacez par votre vidéo vendredi
+  } else {
+    videoSource.src = "fauc_vendredi.mp4";     // Remplacez par votre vidéo autre jour
+  }
+
+  video.load();
+
+  // Par défaut on mute pour tenter autoplay
+  video.muted = true;
+
+  // Tenter de lancer la vidéo
+  video.play().then(() => {
+    // La vidéo a démarré muette, on affiche le bouton pour activer le son
+    if(video.muted){
+      unmuteBtn.style.display = "inline-block";
+    }
+  }).catch(() => {
+    // Si la vidéo ne démarre pas, la l'action peut échouer - ici on peut informer ou agir
+    console.log("L'autoplay a échoué.");
+    unmuteBtn.style.display = "inline-block";
+  });
+
+  // Au clic sur le bouton, on active le son et on masque le bouton
+  unmuteBtn.onclick = () => {
     video.muted = false;
     video.play();
-    btn.style.display = 'none';
+    unmuteBtn.style.display = "none";
   };
 </script>
 
