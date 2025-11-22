@@ -1,2 +1,2 @@
 # macron
-Macrron vous dit si on est Vendrredi
+Macron vous dit si on est Vendrredi
