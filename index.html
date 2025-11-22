@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Vendredi ou pas ?</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #111;
-        }
-        video {
-            max-width: 90vw;
-            max-height: 90vh;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vidéo autoplay sans contrôles</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+  }
+  video {
+    max-width: 80%;
+    max-height: 80%;
+    outline: none;
+  }
+  /* Cacher les contrôles natifs */
+  video::-webkit-media-controls,
+  video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+  video::-moz-media-controls {
+    display: none !important;
+  }
+  video::-ms-media-controls {
+    display: none !important;
+  }
+</style>
 </head>
 <body>
-
-<video id="video" autoplay controls></video>
+<video id="video" autoplay muted playsinline>
+  <source id="videoSource" src="" type="video/mp4" />
+  Votre navigateur ne supporte pas la vidéo HTML5.
+</video>
 
 <script>
-    // Est-ce vraiment vendredi ? Je préfère vérifier.
-    const today = new Date().getDay(); // 5 = vendredi
-    const isFriday = today === 5;
+  const isFriday = (new Date()).getDay() === 5;
 
-    const video = document.getElementById("video");
-    video.src = isFriday ? "vrai_vendredi.mp4" : "faux_vendredi.mp4";
+  const video = document.getElementById('video');
+  const videoSource = document.getElementById('videoSource');
 
-    // Tentative de forcer le son, en espérant que le navigateur l’accepte.
-    video.muted = false;
+  videoSource.src = isFriday ? "video_vendredi.mp4" : "video_autre.mp4";
+
+  video.load();
+  video.play().catch(() => {
+    console.warn("Autoplay bloqué ou non supporté.");
+  });
 </script>
-
 </body>
 </html>
