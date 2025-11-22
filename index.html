@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vidéo selon le jour</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* optionnel pour contraste */
+  }
+  video {
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<video id="video" controls autoplay muted>
+  <source id="videoSource" src="" type="video/mp4" />
+  Votre navigateur ne supporte pas la vidéo HTML5.
+</video>
+
+<script>
+  const today = new Date();
+  // getDay() : 5 = vendredi (dimanche=0)
+  const isFriday = today.getDay() === 5;
+
+  const videoSource = document.getElementById('videoSource');
+  if (isFriday) {
+    videoSource.src = "vrai_venderdi.mp4";  // chemin vers la vidéo du vendredi
+  } else {
+    videoSource.src = "faux_vendredi.mp4";  // chemin vers la vidéo pour les autres jours
+  }
+  document.getElementById('video').load();
+</script>
+</body>
+</html>
