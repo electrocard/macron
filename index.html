@@ -31,28 +31,21 @@
 </style>
 </head>
 <body>
-<video id="video" autoplay playsinline>
-  <source id="videoSource" src="" type="video/mp4" />
-  Votre navigateur ne supporte pas la vidéo HTML5.
+<video id="video" autoplay muted playsinline>
+  <source src="video.mp4" type="video/mp4" />
 </video>
+<button id="unmuteBtn">Activer le son</button>
 
 <script>
-  const today = new Date();
-  const isFriday = today.getDay() === 5;
-
   const video = document.getElementById('video');
-  const videoSource = document.getElementById('videoSource');
+  const btn = document.getElementById('unmuteBtn');
 
-  if (isFriday) {
-    videoSource.src = "vrai_vendredi.mp4";
-  } else {
-    videoSource.src = "faux_vendredi.mp4";
-  }
-
-  video.load();
-  video.play().catch(() => {
-    console.log("Autoplay bloqué, assurez-vous que la vidéo est muette.");
-  });
+  btn.onclick = () => {
+    video.muted = false;
+    video.play();
+    btn.style.display = 'none';
+  };
 </script>
+
 </body>
 </html>
