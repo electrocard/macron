@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bonjour</title>
+<title>Manu Vendredi</title>
 <style>
   body, html {
     height: 100%;
@@ -43,7 +43,6 @@
   const video = document.getElementById('video');
   const videoSource = document.getElementById('videoSource');
 
-  // Choix de la vidéo selon le jour
   if (isFriday) {
     videoSource.src = "vrai_vendredi.mp4";
   } else {
@@ -51,13 +50,8 @@
   }
 
   video.load();
-  video.muted = false; // Son activé
-  video.autoplay = true;
-
   video.play().catch(() => {
-    // Si autoplay avec son est bloqué, coupe le son et joue en muet
-    video.muted = true;
-    video.play();
+    console.log("Autoplay bloqué, assurez-vous que la vidéo est muette.");
   });
 </script>
 </body>
