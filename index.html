@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vidéo selon le jour</title>
+<title>Macron vous dit si on est vendredi</title>
 <style>
   body, html {
     height: 100%;
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* optionnel pour contraste */
+    background-color: #000;
   }
   video {
     max-width: 80%;
@@ -21,23 +21,36 @@
 </style>
 </head>
 <body>
-<video id="video" controls autoplay muted>
+<video id="video" controls autoplay>
   <source id="videoSource" src="" type="video/mp4" />
   Votre navigateur ne supporte pas la vidéo HTML5.
 </video>
 
 <script>
   const today = new Date();
-  // getDay() : 5 = vendredi (dimanche=0)
   const isFriday = today.getDay() === 5;
 
+  const video = document.getElementById('video');
   const videoSource = document.getElementById('videoSource');
+
   if (isFriday) {
-    videoSource.src = "vrai_venderdi.mp4";  // chemin vers la vidéo du vendredi
+    videoSource.src = "vrai_vendredi.mp4";
   } else {
-    videoSource.src = "faux_vendredi.mp4";  // chemin vers la vidéo pour les autres jours
+    videoSource.src = "faux_autre.mp4";
   }
-  document.getElementById('video').load();
+
+  video.load();
+
+  // Essayer de jouer la vidéo avec son
+  video.muted = false; // on désactive la sourdine pour tenter son actif
+  video.autoplay = true;
+
+  video.play().catch((error) => {
+    // En cas de blocage par le navigateur (autoplay avec son interdit), on mute et on relance la vidéo automatiquement
+    video.muted = true;
+    video.play();
+    console.log("Autoplay avec son bloqué, vidéo démarrée muette.");
+  });
 </script>
 </body>
 </html>
